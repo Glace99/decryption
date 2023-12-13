@@ -33,11 +33,10 @@ int	main(void)
 				}
 				k++;
 			}
-			free(characters[j]);
 			j++;
 		}
 		printf(" ");
-		free(characters);
+		free_all(characters);
 		i++;
 	}
 	printf("\n");
@@ -59,7 +58,7 @@ char	**ft_split(char *string, char sep)
 	while (string[i])
 	{
 		split_string[j] = get_word(string, sep, &i);
-		if (*split_string == NULL)
+		if (split_string[j] == NULL)
 			return (free_all(split_string));
 		j++;
 	}
@@ -77,7 +76,7 @@ char	*get_word(char *string, char sep, int *i)
 	j = *i;
 	while (string[j] && string[j] != sep)
 		j++;
-	word = calloc(j, sizeof(char));
+	word = calloc(j + 1, sizeof(char));
 	if (word == NULL)
 		return (0);
 	j = 0;
@@ -116,7 +115,9 @@ char	**free_all(char	**split_string)
 	while (split_string[i])
 	{
 		free(split_string[i]);
+		split_string[i] == NULL;
 		i++;
 	}
+	free(split_string);
 	return (NULL);
 }
